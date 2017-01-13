@@ -7,7 +7,8 @@ void ofApp::setup()
 
 void ofApp::update()
 {
-	
+	if (ofGetKeyPressed('a')) cam.enableOrtho();
+	else cam.disableOrtho();
 }
 
 void ofApp::draw()
@@ -15,7 +16,19 @@ void ofApp::draw()
 	disp.begin();
 	ofClear(0, 255);
 	
-	ofDrawLine(0, 0, def::scr_w, def::scr_h);
+	cam.begin();
+	for (int i = -3000;i < 3000;i+=100)
+	{
+		ofPushMatrix();
+		ofNoFill();
+		ofTranslate(i, 0, -500);
+		ofRotate(ofGetFrameNum() + i, 1.0, 1.2, 2.3);
+		ofDrawBox(0, 0, 0, 50, 50, 50);
+		ofFill();
+		ofPopMatrix();
+	}
+	cam.end();
+	
 	for (int x = 0;x <= def::scr_w; x+=200)
 	{
 		for (int y = 0;y<= def::scr_h; y+=200)
@@ -26,7 +39,6 @@ void ofApp::draw()
 			ofDrawLine(x, y-sc, x, y+sc);
 		}
 	}
-	
 	disp.end();
 	
 	disp.draw(0, 0, ofGetWidth(), ofGetWidth() / float(def::scr_w) * def::scr_h);

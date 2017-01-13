@@ -23,4 +23,6 @@ public:
 	void gotMessage(ofMessage msg);
 	
 	dispManager disp;
+	
+	ofCamera cam;
 };
