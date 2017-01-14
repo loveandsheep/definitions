@@ -22,7 +22,7 @@ public:
 	void draw();
 	
 	void addNewNode(ofVec2f pos, int type);
-	vector<ofPtr<node> > nodes;
+	vector< ofPtr<node> > nodes;
 
 };
 

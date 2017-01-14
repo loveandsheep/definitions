@@ -10,6 +10,7 @@
 #define node_hpp
 
 #include "ofMain.h"
+#include "ofxEasing.h"
 
 class nodeOutlet;
 class nodeInlet;
@@ -19,9 +20,8 @@ class nodeInlet{
 public:
 	string label;
 	float param;
-	bool connected;
-	
 	ofPtr<nodeOutlet> targ;
+	void disConnect();
 };
 
 class nodeOutlet{
@@ -44,6 +44,7 @@ public:
 	vector<ofPtr<nodeOutlet> > outlets;
 	
 	void beWannaConnect(){wannaConnect = true;}
+	void connectTo(int index, ofPtr<nodeOutlet> out);
 	void disconnectInlets(int index = -1);
 	void disconnectOutlets(int index = -1);
 };
@@ -52,7 +53,7 @@ public:
 class node{
 public:
 	
-	void setup();
+	void setup(ofVec2f pos_);
 	void update();
 	void draw();
 	

@@ -3,31 +3,20 @@
 void ofApp::setup()
 {
 	disp.setup();
+	nodeMn.setup();
 }
 
 void ofApp::update()
 {
-	if (ofGetKeyPressed('a')) cam.enableOrtho();
-	else cam.disableOrtho();
+	nodeMn.update();
 }
 
 void ofApp::draw()
 {
 	disp.begin();
 	ofClear(0, 255);
-	
-	cam.begin();
-	for (int i = -3000;i < 3000;i+=100)
-	{
-		ofPushMatrix();
-		ofNoFill();
-		ofTranslate(i, 0, -500);
-		ofRotate(ofGetFrameNum() + i, 1.0, 1.2, 2.3);
-		ofDrawBox(0, 0, 0, 50, 50, 50);
-		ofFill();
-		ofPopMatrix();
-	}
-	cam.end();
+
+	nodeMn.draw();
 	
 	for (int x = 0;x <= def::scr_w; x+=200)
 	{
@@ -45,13 +34,14 @@ void ofApp::draw()
 	
 	ofRectangle src,dst;
 	float ht = ofGetWidth() / (def::scr_w) * def::scr_h;
-	src.set(1920, 0, 1920, 1080);
+	src.set(0, 0, 1920, 1080);
 	dst.set(0, ofGetHeight() - 540, 960, 540);
 	disp.draw(src, dst);
 }
 
-void ofApp::keyPressed(int key){
-
+void ofApp::keyPressed(int key)
+{
+	
 }
 
 
@@ -72,6 +62,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 void ofApp::mousePressed(int x, int y, int button){
 
+	nodeMn.addNewNode(ofVec2f(x, y), 0);
+	
 }
 
 

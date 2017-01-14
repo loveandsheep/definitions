@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "dispManager.hpp"
+#include "nodeManager.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -23,6 +24,7 @@ public:
 	void gotMessage(ofMessage msg);
 	
 	dispManager disp;
+	nodeManager nodeMn;
 	
 	ofCamera cam;
 };
