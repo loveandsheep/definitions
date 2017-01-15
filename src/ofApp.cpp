@@ -48,14 +48,18 @@ void ofApp::draw()
 	cam.end();
 	disp.end();
 	
-	if (!singleView) disp.draw(0, 0, ofGetWidth(), ofGetWidth() / float(def::scr_w) * def::scr_h);
-	
+
 	ofRectangle src,dst;
 	float ht = ofGetWidth() / (def::scr_w) * def::scr_h;
 	src.set(0, 0, 1920, 1080);
 	dst.set(0, ofGetHeight() - 540, 960, 540);
 	if (singleView) dst.set(0, 0, 1920, 1080);
 	disp.draw(src, dst);
+	
+	if (!singleView) disp.draw(0, 0,
+							   def::scr_w,
+							   def::scr_h);
+	
 	
 	if (isDebug) gui.draw();
 	
@@ -64,6 +68,7 @@ void ofApp::draw()
 void ofApp::keyPressed(int key)
 {
 	if (key == 'd') isDebug ^= true;
+	if (key == 'f') ofToggleFullscreen();
 }
 
 
