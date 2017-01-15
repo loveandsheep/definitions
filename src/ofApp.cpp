@@ -4,6 +4,14 @@ void ofApp::setup()
 {
 	disp.setup();
 	nodeMn.setup();
+	
+	gui.setup();
+	gui.add(singleView.set("singleView", true));
+	isDebug = true;
+	
+	cam.setPosition(def::scr_w / 2.0, def::scr_h/2.0, 1000);
+	cam.setVFlip(true);
+	cam.enableOrtho();
 }
 
 void ofApp::update()
@@ -13,9 +21,16 @@ void ofApp::update()
 
 void ofApp::draw()
 {
+	ofClear(0);
+	
 	disp.begin();
+	
 	ofClear(0, 255);
 
+	cam.begin();
+	ofPushMatrix();
+	ofTranslate(0, 0);
+	
 	nodeMn.draw();
 	
 	for (int x = 0;x <= def::scr_w; x+=200)
@@ -23,25 +38,32 @@ void ofApp::draw()
 		for (int y = 0;y<= def::scr_h; y+=200)
 		{
 			ofSetColor(255);
-			int sc = 7;
-			ofDrawLine(x-sc, y, x+sc, y);
-			ofDrawLine(x, y-sc, x, y+sc);
+			int sc = 3;
+			ofDrawLine(x-sc, y-sc, x+sc, y+sc);
+			ofDrawLine(x+sc, y-sc, x-sc, y+sc);
 		}
 	}
+
+	ofPopMatrix();
+	cam.end();
 	disp.end();
 	
-	disp.draw(0, 0, ofGetWidth(), ofGetWidth() / float(def::scr_w) * def::scr_h);
+	if (!singleView) disp.draw(0, 0, ofGetWidth(), ofGetWidth() / float(def::scr_w) * def::scr_h);
 	
 	ofRectangle src,dst;
 	float ht = ofGetWidth() / (def::scr_w) * def::scr_h;
 	src.set(0, 0, 1920, 1080);
 	dst.set(0, ofGetHeight() - 540, 960, 540);
+	if (singleView) dst.set(0, 0, 1920, 1080);
 	disp.draw(src, dst);
+	
+	if (isDebug) gui.draw();
+	
 }
 
 void ofApp::keyPressed(int key)
 {
-	
+	if (key == 'd') isDebug ^= true;
 }
 
 

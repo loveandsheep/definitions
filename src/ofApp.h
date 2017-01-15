@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "dispManager.hpp"
 #include "nodeManager.hpp"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 
@@ -27,4 +28,8 @@ public:
 	nodeManager nodeMn;
 	
 	ofCamera cam;
+	
+	ofxPanel gui;
+	bool isDebug;
+	ofParameter<bool> singleView;
 };

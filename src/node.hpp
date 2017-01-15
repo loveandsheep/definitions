@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 #include "ofxEasing.h"
+#include "ofxKsmrAgileEye.h"
 
 class nodeOutlet;
 class nodeInlet;
@@ -18,16 +19,18 @@ class node;
 
 class nodeInlet{
 public:
+	ofVec2f absPos;
 	string label;
-	float param;
+	float param = 0;
 	ofPtr<nodeOutlet> targ;
 	void disConnect();
 };
 
 class nodeOutlet{
 public:
+	ofVec2f absPos;
 	string label;
-	float param;
+	float param = 0;
 	bool connected;
 	
 	ofPtr<nodeInlet> targ;
@@ -57,17 +60,34 @@ public:
 	void update();
 	void draw();
 	
+	void draw_inlets();
+	void draw_outlets();
+	
 	void addInlet(string label);
 	void addOutlet(string label);
 	
+	float getInletValue(string label);
+	void setOutletValue(string name, float param);
+	
 	ofVec2f pos;
+	ofVec2f pos_base;
+	float	area_scale;
+	float	seed;
 	int		frame;
+	
+	bool	isClosing = false;
+	bool	needErase;
+	int		closeFrame;
 	
 	//actions
 	void appear();
 	void disappear();
 	
 	nodeIOManager manager;
+	
+	static const int TYPE_AGILE = 1;
+	int type = TYPE_AGILE;
+	ofxKsmrAgileEye agileEye;
 };
 
 #endif /* node_hpp */

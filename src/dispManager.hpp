@@ -11,17 +11,20 @@
 
 #include "ofMain.h"
 #include "difinitions_const.h"
+#include "ofxKsmrFragmentFx.h"
 
 class dispManager{
 public:
 	
 	void setup();
 	void begin(){buffer.begin();}
-	void end(){buffer.end();}
+	void end();
 	void draw(int x, int y, int w, int h);
 	void drawCenter(int x, int y, int w, int h);
 	void draw(ofRectangle src, ofRectangle dst);
 	ofFbo buffer;
+	
+	ofxKsmrFragmentFx fx;
 };
 
 #endif /* dispManager_hpp */
