@@ -11,7 +11,7 @@
 
 #include "ofMain.h"
 #include "node.hpp"
-
+#include "sys03Node.hpp"
 
 class nodeManager{
 	
@@ -23,6 +23,8 @@ public:
 	
 	void addNewNode(ofVec2f pos, int type);
 	vector< ofPtr<node> > nodes;
+	
+	sys03Node sys03node;
 
 };
 

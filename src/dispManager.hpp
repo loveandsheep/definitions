@@ -13,6 +13,8 @@
 #include "difinitions_const.h"
 #include "ofxKsmrFragmentFx.h"
 
+#include "ofxQuadWarp.h"
+
 class dispManager{
 public:
 	
@@ -22,9 +24,12 @@ public:
 	void draw(int x, int y, int w, int h);
 	void drawCenter(int x, int y, int w, int h);
 	void draw(ofRectangle src, ofRectangle dst);
+	void drawWarp();
 	ofFbo buffer;
 	
 	ofxKsmrFragmentFx fx;
+	
+	ofxQuadWarp warper[3];
 };
 
 #endif /* dispManager_hpp */

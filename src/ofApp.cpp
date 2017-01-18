@@ -7,7 +7,7 @@ void ofApp::setup()
 	
 	gui.setup();
 	gui.add(singleView.set("singleView", true));
-	isDebug = true;
+	isDebug = false;
 	
 	cam.setPosition(def::scr_w / 2.0, def::scr_h/2.0, 1000);
 	cam.setVFlip(true);
@@ -17,6 +17,15 @@ void ofApp::setup()
 void ofApp::update()
 {
 	nodeMn.update();
+	
+	if (ofGetFrameNum() < 30)
+	{
+		if (ofGetFrameNum() % 2 == 0)
+		{
+			nodeMn.addNewNode(ofVec2f(ofRandomuf() * def::scr_w,
+									  ofRandomuf() * def::scr_h), 0);
+		}
+	}
 }
 
 void ofApp::draw()
@@ -48,18 +57,7 @@ void ofApp::draw()
 	cam.end();
 	disp.end();
 	
-
-	ofRectangle src,dst;
-	float ht = ofGetWidth() / (def::scr_w) * def::scr_h;
-	src.set(0, 0, 1920, 1080);
-	dst.set(0, ofGetHeight() - 540, 960, 540);
-	if (singleView) dst.set(0, 0, 1920, 1080);
-	disp.draw(src, dst);
-	
-	if (!singleView) disp.draw(0, 0,
-							   def::scr_w,
-							   def::scr_h);
-	
+	disp.drawWarp();
 	
 	if (isDebug) gui.draw();
 	
@@ -69,6 +67,13 @@ void ofApp::keyPressed(int key)
 {
 	if (key == 'd') isDebug ^= true;
 	if (key == 'f') ofToggleFullscreen();
+	if (key == 's')
+	{
+		for (int i = 0;i < 3;i++)
+		{
+			disp.warper[i].save("warp"+ofToString(i)+".xml");
+		}
+	}
 }
 
 

@@ -8,24 +8,32 @@
 
 #include "node.hpp"
 
-void node::setup(ofVec2f pos_)
+void node::setup(ofVec2f pos_, int tp)
 {
+	type		= tp;
 	pos_base	= pos_;
 	frame		= 0;
 	isClosing	= false;
 	needErase	= false;
 	closeFrame	= 0;
 	
-	addInlet("pos-X");
-	addInlet("pos-Y");
-	addOutlet("arm-A");
-	addOutlet("arm-B");
-	addOutlet("arm-C");
+	
+	if (type == TYPE_AGILE)
+	{
+		addInlet("pos-X");
+		addInlet("pos-Y");
+		addInlet("drawing");
+		addOutlet("arm-A");
+		addOutlet("arm-B");
+		addOutlet("arm-C");
+	}
 	
 	area_scale = ofRandom(100, 200);
 	seed = ofRandomuf();
 	
 	agileEye.setup();
+	
+	bgColor.set(1.0, 1.0, 1.0, 0.1);
 }
 
 void node::update()
@@ -64,11 +72,12 @@ void node::draw()
 	ofSetRectMode(OF_RECTMODE_CENTER);
 	float time_opening	 = ofxeasing::map_clamp(frame, 0, 15, 0.0, 1.0, ofxeasing::quint::easeOut) - ofxeasing::map_clamp(closeFrame, 0, 30, 0.0, 1.0, ofxeasing::quint::easeInOut);
 	float time_opening_b = ofxeasing::map_clamp(frame, 10, 40, 0.0, 1.0, ofxeasing::quint::easeInOut) - ofxeasing::map_clamp(closeFrame, 0, 15, 0.0, 1.0, ofxeasing::quint::easeInOut);
+	float time_object =  ofxeasing::map_clamp(frame, 30, 60, 0.0, 1.0, ofxeasing::quint::easeInOut) - ofxeasing::map_clamp(closeFrame, 0, 15, 0.0, 1.0, ofxeasing::quint::easeInOut);
 	
 	ofPushMatrix();
 	ofRotateZ(45 * (seed < 0.5 ? -1.0 : 1.0));
 	
-	ofSetColor(255,30);
+	ofSetColor(bgColor);
 	ofDrawRectangle(0, 0, time_opening * area_scale, time_opening_b * area_scale);
 	
 	ofNoFill();
@@ -112,7 +121,14 @@ void node::draw()
 	ofSetRectMode(OF_RECTMODE_CORNER);
 
 	ofRotateY(seed < 0.5 ? 45 : -45);
-	agileEye.draw();
+	
+	ofPushMatrix();
+	{
+		glScaled(time_object, time_object, 1.0);
+		agileEye.draw();
+	}
+	ofPopMatrix();
+	
 	ofPopMatrix();
 	
 	draw_inlets();

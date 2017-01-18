@@ -56,7 +56,7 @@ public:
 class node{
 public:
 	
-	void setup(ofVec2f pos_);
+	void setup(ofVec2f pos_, int tp = TYPE_AGILE);
 	void update();
 	void draw();
 	
@@ -71,6 +71,7 @@ public:
 	
 	ofVec2f pos;
 	ofVec2f pos_base;
+	ofFloatColor bgColor;
 	float	area_scale;
 	float	seed;
 	int		frame;
@@ -86,6 +87,8 @@ public:
 	nodeIOManager manager;
 	
 	static const int TYPE_AGILE = 1;
+	static const int TYPE_ARM = 2;
+	static const int TYPE_POP = 3;
 	int type = TYPE_AGILE;
 	ofxKsmrAgileEye agileEye;
 };

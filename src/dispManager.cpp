@@ -23,6 +23,15 @@ void dispManager::setup()
 
 	buffer.allocate(setting);
 	fx.setup(&buffer, setting);
+	
+	for (int i = 0;i < 3;i++)
+	{
+		warper[i].setSourceRect(ofRectangle(i * 1920, 0, 1920, 1080));
+		warper[i].setTargetRect(ofRectangle(i * 1920 + 400, 500, 600, 500));
+		warper[i].setup();
+		warper[i].load("warp"+ofToString(i)+".xml");
+		warper[i].enableMouseControls();
+	}
 }
 
 void dispManager::end()
@@ -39,6 +48,43 @@ void dispManager::end()
 	
 	
 	fx.applyFx();
+}
+
+void dispManager::drawWarp()
+{
+	for (int i = 0;i < 3;i++)
+	{
+		ofMatrix4x4 mat = warper[i].getMatrix();
+		ofPushMatrix();
+		ofMultMatrix(mat);
+		buffer.getTexture().bind();
+		ofVec2f vt[4];
+		vt[0] = warper[i].getSourcePoints()[0];
+		vt[1] = warper[i].getSourcePoints()[1];
+		vt[2] = warper[i].getSourcePoints()[3];
+		vt[3] = warper[i].getSourcePoints()[2];
+		
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glVertexPointer(2, GL_FLOAT, 0, vt);
+		glTexCoordPointer(2, GL_FLOAT, 0, vt);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		
+		buffer.getTexture().unbind();
+		ofPopMatrix();
+		
+		if (ofGetKeyPressed('w'))
+		{
+			warper[i].drawQuadOutline();
+			warper[i].enableMouseControls();
+		}
+		else
+		{
+			warper[i].disableMouseControls();
+		}
+	}
 }
 
 void dispManager::draw(int x, int y, int w, int h)
