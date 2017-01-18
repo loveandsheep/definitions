@@ -19,8 +19,8 @@ namespace def{
 	const string ADDR_SYS03 = "192.168.11.3";
 	const string ADDR_SYS04_C = "192.168.11.4";
 	const string ADDR_SYS04_P = "192.168.11.5";
-	const string ADDR_SYS06_A = "192.168.11.11";
-	const string ADDR_SYS06_B = "192.168.11.14";
+	const string ADDR_SYS06_A = "192.168.11.14";
+	const string ADDR_SYS06_B = "192.168.11.11";
 }
 
 #endif /* difinitions_const_h */

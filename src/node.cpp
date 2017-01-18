@@ -45,6 +45,21 @@ void node::setup(ofVec2f pos_, int tp)
 		addOutlet("cos");
 	}
 	
+	if (type == TYPE_POP_A)
+	{
+		for (int i = 0;i < 9;i++)
+		{
+			addInlet("pop"+ofToString(i));
+		}
+	}
+	if (type == TYPE_POP_B)
+	{
+		for (int i = 0;i < 5;i++)
+		{
+			addInlet("pop"+ofToString(i));
+		}
+	}
+
 	area_scale = ofRandom(100, 200);
 	seed = ofRandomuf();
 	
@@ -68,6 +83,22 @@ void node::update()
 											   ofMap(getInletValue("pos-Z"), 0, 1, -50, 50)));
 			arm.update();
 		}
+	}
+	if (type == TYPE_POP_A)
+	{
+		for (int i = 0;i < 9;i++)
+		{
+			setOutletValue("pop"+ofToString(i), 0);
+			if (ofRandomuf() < 0.01) popStat[i] = 1;
+			
+			if (popStat[i] == 1 && (getInletValue("pop"+ofToString(i)) > 0.5))
+			{
+				setOutletValue("pop"+ofToString(i), 1);
+				bangFrame[i] = 30;
+				popStat[i] = 0;
+			}
+		}
+		
 	}
 	
 	pos = pos_base + ofVec2f(ofSignedNoise(seed * 342.31 + ofGetFrameNum() / 234.5) * 5,
@@ -151,6 +182,44 @@ void node::draw()
 	
 	ofPushMatrix();
 	{
+		
+		for (int i = 0;i < 10;i++)
+		{
+			bangFrame[i] = MAX(0, bangFrame[i] - 1);
+		}
+		
+		if (type == TYPE_POP_A)
+		{
+			for (int x = 0;x < 3;x++)
+			{
+				for (int y = 0;y < 3;y++)
+				{
+					ofPushMatrix();
+					ofTranslate((x-1) * 35, (y-1) * 35);
+					ofSetColor(255, 40 + (popStat[x * 3 + y] == 1 ? 100 : 0));
+					ofDrawCircle(0, 0, time_object * 12);
+					
+					float rad = ofxeasing::map_clamp(bangFrame[x * 3 + y], 0.0, 30.0, 1.0, 0.0,
+													 ofxeasing::quint::easeIn);
+					ofSetColor(255, 255 * (1.0 - rad));
+					ofDrawCircle(0, 0, rad * 10 + 12);
+					ofPopMatrix();
+				}
+			}
+		}
+
+		if (type == TYPE_POP_B)
+		{
+			for (int x = 0;x < 5;x++)
+			{
+				ofPushMatrix();
+				ofTranslate((x-2)*35, 0);
+				ofSetColor(255, 40 + (popStat[x] == 1 ? 100 : 0));
+				ofDrawCircle(0, 0, time_object * 12);
+				ofPopMatrix();
+			}
+		}
+		
 		glScaled(time_object, time_object, 1.0);
 		
 		if (type == TYPE_AGILE)

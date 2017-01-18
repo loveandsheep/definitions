@@ -23,8 +23,8 @@ void ofApp::update()
 	{
 		if (ofGetFrameNum() % 2 == 0)
 		{
-			nodeMn.addNewNode(ofVec2f(ofRandomuf() * def::scr_w,
-									  ofRandomuf() * def::scr_h), node::TYPE_AGILE);
+//			nodeMn.addNewNode(ofVec2f(ofRandomuf() * def::scr_w,
+//									  ofRandomuf() * def::scr_h), node::TYPE_AGILE);
 		}
 	}
 }
@@ -80,7 +80,11 @@ void ofApp::keyPressed(int key)
 		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_AGILE);
 	if (key == '2')
 		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_ARM);
+	if (key == '3')
+		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_POP_A);
 	if (key == '4')
+		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_POP_B);
+	if (key == '5')
 		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_CIRCLE);
 
 }

@@ -98,7 +98,8 @@ public:
 	ofxKsmrAgileEye agileEye;
 	arm04Sim arm;
 	
-	
+	int popStat[10];
+	int bangFrame[10];
 	
 	float circle_phase = 0;
 };
