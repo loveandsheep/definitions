@@ -32,7 +32,25 @@ void sys06Node::update()
 {
 	if (targNode)
 	{
+		if (targNode->type == node::TYPE_POP_A)
+		{
+			for (int i = 0;i < 9;i++)
+			{
+				if (targNode->manager.outlets[i]->param == 1)
+				{
+					ofxOscMessage m;
+					m.setAddress("/bang");
+					m.addIntArg(i / 3);
+					m.addIntArg(i % 3);
+					sender.sendMessage(m);
+				}
+			}
+			
+		}
+		
 		ofxOscMessage m;
+		m.setAddress("/bang");
+//		m.addIntArg(<#std::int32_t argument#>)
 		
 	}
 }

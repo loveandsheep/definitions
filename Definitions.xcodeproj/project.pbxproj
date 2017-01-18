@@ -920,8 +920,8 @@
 				C60CA8AC1E2F2B9E00EB3E33 /* sys03Node.cpp */,
 				C60CA8B71E2F489E00EB3E33 /* sys04Node.hpp */,
 				C60CA8B61E2F489E00EB3E33 /* sys04Node.cpp */,
-				C60CA8BA1E2F651E00EB3E33 /* sys06Node.cpp */,
 				C60CA8BB1E2F651E00EB3E33 /* sys06Node.hpp */,
+				C60CA8BA1E2F651E00EB3E33 /* sys06Node.cpp */,
 			);
 			name = systemNodes;
 			sourceTree = "<group>";
