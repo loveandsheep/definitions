@@ -10,7 +10,14 @@
 
 void sys03Node::setup()
 {
-	sender.setup(def::ADDR_SYS03, 54503);
+	senderSetup = true;
+	try {
+		sender.setup(def::ADDR_SYS03, 54503);
+	} catch (std::runtime_error) {
+		cout << "osc error" << endl;
+		senderSetup = false;
+	}
+	
 }
 
 bool sys03Node::setTarget(ofPtr<node> targ)
@@ -47,8 +54,10 @@ void sys03Node::update()
 			m2.setAddress("/system03/gpio");
 			m2.addIntArg(targNode->getInletValue("drawing") > 0.5);
 			
-			sender.sendMessage(m);
-			sender.sendMessage(m2);
+			if (senderSetup){
+				sender.sendMessage(m);
+				sender.sendMessage(m2);
+			}
 		}
 	}
 }

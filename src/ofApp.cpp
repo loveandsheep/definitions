@@ -27,6 +27,15 @@ void ofApp::update()
 //									  ofRandomuf() * def::scr_h), node::TYPE_AGILE);
 		}
 	}
+	
+	static int step = ofRandom(30);
+	if (ofGetFrameNum() % step == 0)
+	{
+		step = ofRandom(100, 500);
+		nodeMn.addNewNode(ofVec2f(ofRandomuf() * def::scr_w/3,
+								  ofRandomuf() * def::scr_h),
+						  (int(ofRandom(100)) % 5) + 1);
+	}
 }
 
 void ofApp::draw()

@@ -13,6 +13,7 @@
 #include "node.hpp"
 #include "sys03Node.hpp"
 #include "sys04Node.hpp"
+#include "sys06Node.hpp"
 
 class nodeManager{
 	
@@ -28,6 +29,7 @@ public:
 	sys03Node sys03node;
 	sys04Node sys04node_c;
 	sys04Node sys04node_p;
+	sys06Node sys06node_a;
 };
 
 #endif /* nodeManager_hpp */

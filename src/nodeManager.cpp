@@ -13,6 +13,7 @@ void nodeManager::setup()
 	sys03node.setup();
 	sys04node_c.setup(true);
 	sys04node_p.setup(false);
+	sys06node_a.setup(true);
 }
 
 void nodeManager::update()
@@ -21,6 +22,7 @@ void nodeManager::update()
 	sys03node.update();
 	sys04node_c.update();
 	sys04node_p.update();
+	sys06node_a.update();
 	
 	vector<ofPtr<node> >::iterator it = nodes.begin();
 	
@@ -33,6 +35,19 @@ void nodeManager::update()
 		}
 		else{
 			++it;
+		}
+	}
+	
+	for (int i = 0;i < nodes.size();i++)
+	{
+		for (int j = i;j < nodes.size();j++)
+		{
+			float dist = nodes[i]->pos_base.squareDistance(nodes[j]->pos_base);
+			if (dist < powf(200, 2))
+			{
+				nodes[i]->pos_base += (nodes[i]->pos_base - nodes[j]->pos_base).getNormalized() * 10000.0 / dist;
+				nodes[j]->pos_base += (nodes[j]->pos_base - nodes[i]->pos_base).getNormalized() * 10000.0 / dist;
+			}
 		}
 	}
 }
@@ -53,6 +68,8 @@ void nodeManager::draw()
 		if (nodes.size() > 3)
 			sys04node_p.setTarget(nodes[int(ofRandom(100)) % nodes.size()]);
 		
+		if (nodes.size() > 3)
+			sys06node_a.setTarget(nodes[int(ofRandom(100)) % nodes.size()]);
 	}
 }
 

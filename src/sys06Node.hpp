@@ -24,6 +24,7 @@ public:
 	ofPtr<node> targNode;
 	
 	ofxOscSender sender;
+	bool senderSetup;
 };
 
 #endif /* sys06Node_hpp */

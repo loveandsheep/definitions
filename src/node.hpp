@@ -97,9 +97,14 @@ public:
 	
 	ofxKsmrAgileEye agileEye;
 	arm04Sim arm;
+	ofVec3f armTarg;
+	ofVec3f arm_ease;
 	
 	int popStat[10];
+	int popCount[10];
 	int bangFrame[10];
+	int bangTarg = -1;
+	float bangDelay = 0.0;
 	
 	float circle_phase = 0;
 };

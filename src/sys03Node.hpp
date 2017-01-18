@@ -25,6 +25,7 @@ public:
 	
 	bool initSender;
 	ofxOscSender sender;
+	bool senderSetup;
 };
 
 #endif /* sys03Node_hpp */

@@ -10,7 +10,14 @@
 
 void sys04Node::setup(bool isC)
 {
-	sender.setup(isC ? def::ADDR_SYS04_C : def::ADDR_SYS04_P, 12400);
+	senderSetup = true;
+	try{
+		sender.setup(isC ? def::ADDR_SYS04_C : def::ADDR_SYS04_P, 12400);
+	} catch (std::runtime_error) {
+		cout << "osc error" << endl;
+		senderSetup = false;
+	}
+
 }
 
 bool sys04Node::setTarget(ofPtr<node> targ)
@@ -50,7 +57,8 @@ void sys04Node::update()
 			m.addFloatArg(py);
 			m.addFloatArg(pz);
 			
-			sender.sendMessage(m);			
+			if (senderSetup) sender.sendMessage(m);
+			
 		}
 	}
 }

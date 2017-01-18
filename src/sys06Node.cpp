@@ -10,7 +10,14 @@
 
 void sys06Node::setup(bool isC)
 {
-	sender.setup(isC ? def::ADDR_SYS06_A : def::ADDR_SYS06_B, 12400);
+	senderSetup = true;
+	try{
+		sender.setup(isC ? def::ADDR_SYS06_A : def::ADDR_SYS06_B, 12400);
+	} catch (std::runtime_error) {
+		senderSetup = false;
+		cout << "osc error" << endl;
+	}
+
 }
 
 bool sys06Node::setTarget(ofPtr<node> targ)
@@ -32,25 +39,42 @@ void sys06Node::update()
 {
 	if (targNode)
 	{
+		if (targNode->needErase)
+		{
+			targNode.reset();
+			return;
+		}
+		
 		if (targNode->type == node::TYPE_POP_A)
 		{
-			for (int i = 0;i < 9;i++)
+			if (targNode->bangTarg >= 0)
 			{
-				if (targNode->manager.outlets[i]->param == 1)
+				if (senderSetup)
 				{
 					ofxOscMessage m;
 					m.setAddress("/bang");
-					m.addIntArg(i / 3);
-					m.addIntArg(i % 3);
+					m.addIntArg(targNode->bangTarg / 3);
+					m.addIntArg(targNode->bangTarg % 3);
 					sender.sendMessage(m);
 				}
+				targNode->bangTarg = -1;
 			}
-			
 		}
-		
-		ofxOscMessage m;
-		m.setAddress("/bang");
-//		m.addIntArg(<#std::int32_t argument#>)
+		if (targNode->type == node::TYPE_POP_B)
+		{
+			if (targNode->bangTarg >= 0)
+			{
+				if (senderSetup)
+				{
+					ofxOscMessage m;
+					m.setAddress("/bang");
+					m.addIntArg(targNode->bangTarg);
+					m.addIntArg(0);
+					sender.sendMessage(m);
+				}
+				targNode->bangTarg = -1;
+			}
+		}
 		
 	}
 }
