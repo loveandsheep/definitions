@@ -14,6 +14,7 @@ void nodeManager::setup()
 	sys04node_c.setup(true);
 	sys04node_p.setup(false);
 	sys06node_a.setup(true);
+	sys06node_b.setup(false);
 }
 
 void nodeManager::update()
@@ -23,6 +24,7 @@ void nodeManager::update()
 	sys04node_c.update();
 	sys04node_p.update();
 	sys06node_a.update();
+	sys06node_b.update();
 	
 	vector<ofPtr<node> >::iterator it = nodes.begin();
 	
@@ -48,6 +50,11 @@ void nodeManager::update()
 				nodes[i]->pos_base += (nodes[i]->pos_base - nodes[j]->pos_base).getNormalized() * 10000.0 / dist;
 				nodes[j]->pos_base += (nodes[j]->pos_base - nodes[i]->pos_base).getNormalized() * 10000.0 / dist;
 			}
+			nodes[i]->pos_base.x = ofClamp(nodes[i]->pos_base.x, 100, def::scr_w - 100);
+			nodes[i]->pos_base.y = ofClamp(nodes[i]->pos_base.y, 100, def::scr_h - 100);
+			nodes[j]->pos_base.x = ofClamp(nodes[j]->pos_base.x, 100, def::scr_w - 100);
+			nodes[j]->pos_base.y = ofClamp(nodes[j]->pos_base.y, 100, def::scr_h - 100);
+			
 		}
 	}
 }
@@ -56,7 +63,7 @@ void nodeManager::draw()
 {
 	for (auto it : nodes) it->draw();
 	
-	if (ofGetFrameNum() % 60 == 0)
+	if (ofGetFrameNum() % 200 == 0)
 	{
 		
 		if (nodes.size() > 3)
@@ -70,6 +77,9 @@ void nodeManager::draw()
 		
 		if (nodes.size() > 3)
 			sys06node_a.setTarget(nodes[int(ofRandom(100)) % nodes.size()]);
+
+		if (nodes.size() > 3)
+			sys06node_b.setTarget(nodes[int(ofRandom(100)) % nodes.size()]);
 	}
 }
 

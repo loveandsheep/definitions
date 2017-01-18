@@ -22,10 +22,17 @@ public:
 	void update();
 	
 	ofPtr<node> targNode;
+	ofPtr<node> previousNode;
 	
 	bool initSender;
 	ofxOscSender sender;
 	bool senderSetup;
+	
+	ofVec2f oldPos;
+	ofVec2f previousOld;
+	int targFrame;
+	int previousFrame;
+	const ofVec2f sys03HWPos = ofVec2f(900, 800);
 };
 
 #endif /* sys03Node_hpp */

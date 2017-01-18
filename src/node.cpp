@@ -16,7 +16,9 @@ void node::setup(ofVec2f pos_, int tp)
 	isClosing	= false;
 	needErase	= false;
 	closeFrame	= 0;
-	
+	area_scale = ofRandom(100, 200);
+	seed = ofRandomuf();
+	bgColor.set(1.0, 1.0, 1.0, 0.2);
 	
 	if (type == TYPE_AGILE)
 	{
@@ -27,6 +29,7 @@ void node::setup(ofVec2f pos_, int tp)
 		addOutlet("arm-B");
 		addOutlet("arm-C");
 		agileEye.setup();
+		area_scale = 170;
 	}
 	if (type == TYPE_ARM)
 	{
@@ -40,6 +43,7 @@ void node::setup(ofVec2f pos_, int tp)
 						  ofMap(getInletValue("pos-Z"), 0, 1, -50, 50));
 		arm.work.setGlobalPosition(armTarg);
 		arm.update();
+		area_scale = 170;
 	}
 	
 	if (type == TYPE_CIRCLE)
@@ -47,6 +51,7 @@ void node::setup(ofVec2f pos_, int tp)
 		addInlet("speed", 0.5);
 		addOutlet("sin");
 		addOutlet("cos");
+		area_scale = 170;
 	}
 	
 	if ((type == TYPE_POP_A) ||
@@ -54,12 +59,9 @@ void node::setup(ofVec2f pos_, int tp)
 	{
 		addInlet("pop");
 		addOutlet("pop");
+		area_scale = 170;
 	}
 
-	area_scale = ofRandom(100, 200);
-	seed = ofRandomuf();
-	
-	bgColor.set(1.0, 1.0, 1.0, 0.2);
 }
 
 void node::update()

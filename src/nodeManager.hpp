@@ -30,6 +30,7 @@ public:
 	sys04Node sys04node_c;
 	sys04Node sys04node_p;
 	sys06Node sys06node_a;
+	sys06Node sys06node_b;
 };
 
 #endif /* nodeManager_hpp */

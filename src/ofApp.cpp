@@ -28,7 +28,7 @@ void ofApp::update()
 		}
 	}
 	
-	static int step = ofRandom(30);
+	static int step = ofRandom(10, 30);
 	if (ofGetFrameNum() % step == 0)
 	{
 		step = ofRandom(100, 500);

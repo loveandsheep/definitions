@@ -11,6 +11,7 @@
 void sys04Node::setup(bool isC)
 {
 	senderSetup = true;
+	HWPos = (isC ? ofVec2f(600, 800) : ofVec2f(1200, 800));
 	try{
 		sender.setup(isC ? def::ADDR_SYS04_C : def::ADDR_SYS04_P, 12400);
 	} catch (std::runtime_error) {
@@ -24,9 +25,20 @@ bool sys04Node::setTarget(ofPtr<node> targ)
 {
 	if (targ->type == node::TYPE_ARM)
 	{
+		if (targNode)
+		{
+			targNode->bgColor.set(1.0,1.0,1.0, 0.2);
+			previousNode = targNode;
+			previousOld = oldPos;
+			previousFrame = 0;
+		}
+		
 		if (targNode) targNode->bgColor.set(1.0, 1.0, 1.0, 0.2);
 		targNode = targ;
 		targNode->bgColor.set(1.0, 0.3, 0.3, 0.2);
+		oldPos = targNode->pos_base;
+		targFrame = 0;
+		
 		return true;
 	}
 	
@@ -42,8 +54,31 @@ void sys04Node::update()
 		m.addIntArg(1);
 	}
 	
+	if (previousNode)
+	{
+		previousFrame++;
+		float lerp = ofxeasing::map_clamp(previousFrame, 0, 120, 0, 1,
+										  ofxeasing::quint::easeInOut);
+		
+		previousNode->pos_base = HWPos.getInterpolated(previousOld, lerp);
+		if (lerp == 1) previousNode.reset();
+	}
+	
+	
 	if (targNode)
 	{
+		if (targNode->needErase)
+		{
+			targNode.reset();
+			return;
+		}
+		
+		targFrame++;
+		float lerp = ofxeasing::map_clamp(targFrame, 0, 120, 0, 1,
+										  ofxeasing::quint::easeInOut);
+		targNode->pos_base = oldPos.getInterpolated(HWPos, lerp);
+
+		
 		if (ofGetFrameNum() % 120 == 0)
 		{
 			float px, py, pz;
