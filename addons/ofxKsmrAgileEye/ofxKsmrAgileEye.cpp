@@ -140,9 +140,9 @@ void ofxKsmrAgileEye::draw(){
 	ofEnableDepthTest();
 	
 	ofSetColor(255);
-	if (!ofGetKeyPressed('1')) arm[0].draw();
-	if (!ofGetKeyPressed('2')) arm[1].draw();
-	if (!ofGetKeyPressed('3')) arm[2].draw();
+	arm[0].draw();
+	arm[1].draw();
+	arm[2].draw();
 
 
 	ofSetColor(255);
