@@ -145,12 +145,6 @@ void ofxKsmrAgileEye::draw(){
 	if (!ofGetKeyPressed('3')) arm[2].draw();
 
 
-	ofPushMatrix();
-	ofTranslate(-200, -200, 200);
-	ofRotateY(-45);
-	ofLine(-10, 0, 10, 0);
-	ofLine(0, -10, 0, 10);
-	ofPopMatrix();
 	ofSetColor(255);
 
 	ofSetLineWidth(3.0);

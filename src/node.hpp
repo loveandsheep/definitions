@@ -11,7 +11,9 @@
 
 #include "ofMain.h"
 #include "ofxEasing.h"
+
 #include "ofxKsmrAgileEye.h"
+#include "arm04Sim.hpp"
 
 class nodeOutlet;
 class nodeInlet;
@@ -63,7 +65,7 @@ public:
 	void draw_inlets();
 	void draw_outlets();
 	
-	void addInlet(string label);
+	void addInlet(string label, float def = 0.0);
 	void addOutlet(string label);
 	
 	float getInletValue(string label);
@@ -88,9 +90,17 @@ public:
 	
 	static const int TYPE_AGILE = 1;
 	static const int TYPE_ARM = 2;
-	static const int TYPE_POP = 3;
+	static const int TYPE_POP_A = 3;
+	static const int TYPE_POP_B = 4;
+	static const int TYPE_CIRCLE = 5;
 	int type = TYPE_AGILE;
+	
 	ofxKsmrAgileEye agileEye;
+	arm04Sim arm;
+	
+	
+	
+	float circle_phase = 0;
 };
 
 #endif /* node_hpp */

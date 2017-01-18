@@ -12,18 +12,19 @@ void ofApp::setup()
 	cam.setPosition(def::scr_w / 2.0, def::scr_h/2.0, 1000);
 	cam.setVFlip(true);
 	cam.enableOrtho();
+	ofSetCircleResolution(32);
 }
 
 void ofApp::update()
 {
 	nodeMn.update();
 	
-	if (ofGetFrameNum() < 30)
+	if (ofGetFrameNum() < 10)
 	{
 		if (ofGetFrameNum() % 2 == 0)
 		{
 			nodeMn.addNewNode(ofVec2f(ofRandomuf() * def::scr_w,
-									  ofRandomuf() * def::scr_h), 0);
+									  ofRandomuf() * def::scr_h), node::TYPE_AGILE);
 		}
 	}
 }
@@ -44,7 +45,7 @@ void ofApp::draw()
 	
 	for (int x = 0;x <= def::scr_w; x+=200)
 	{
-		for (int y = 0;y<= def::scr_h; y+=200)
+		for (int y = 0; y <= def::scr_h; y+=200)
 		{
 			ofSetColor(255);
 			int sc = 3;
@@ -74,6 +75,14 @@ void ofApp::keyPressed(int key)
 			disp.warper[i].save("warp"+ofToString(i)+".xml");
 		}
 	}
+	
+	if (key == '1')
+		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_AGILE);
+	if (key == '2')
+		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_ARM);
+	if (key == '4')
+		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_CIRCLE);
+
 }
 
 
@@ -94,7 +103,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 void ofApp::mousePressed(int x, int y, int button){
 
-	nodeMn.addNewNode(ofVec2f(x, y), 0);
 	
 }
 

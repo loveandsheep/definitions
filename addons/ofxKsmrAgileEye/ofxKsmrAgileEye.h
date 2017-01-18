@@ -115,8 +115,8 @@ public:
 		ofTranslate(motorNode.getGlobalPosition());
 		ofTranslate(-60,10);
 		ofSetColor(c);
-		ofDrawBitmapString("["+ofToString(arm[0]->id_)+"]Angle :" + ofToString(rootPan) + ":(" + ofToString((rootPan/1.8)) + "Step)",
-						   0,0);
+//		ofDrawBitmapString("["+ofToString(arm[0]->id_)+"]Angle :" + ofToString(rootPan) + ":(" + ofToString((rootPan/1.8)) + "Step)",
+//						   0,0);
 		ofPopMatrix();
 		ofPopStyle();
 	}

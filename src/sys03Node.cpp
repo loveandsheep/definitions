@@ -17,9 +17,9 @@ bool sys03Node::setTarget(ofPtr<node> targ)
 {
 	if (targ->type == node::TYPE_AGILE)
 	{
-		if (targNode) targNode->bgColor.set(1.0,1.0,1.0, 0.5);
+		if (targNode) targNode->bgColor.set(1.0,1.0,1.0, 0.2);
 		targNode = targ;
-		targNode->bgColor.set(1.0, 0.3, 0.3, 0.5);
+		targNode->bgColor.set(1.0, 0.3, 0.3, 0.2);
 		return true;
 	}
 	

@@ -37,6 +37,9 @@
 		C60CA8A71E2F05D300EB3E33 /* ofxQuadWarp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C60CA89F1E2F05D300EB3E33 /* ofxQuadWarp.cpp */; };
 		C60CA8A81E2F05D300EB3E33 /* TODO.md in Sources */ = {isa = PBXBuildFile; fileRef = C60CA8A11E2F05D300EB3E33 /* TODO.md */; };
 		C60CA8AE1E2F2B9E00EB3E33 /* sys03Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C60CA8AC1E2F2B9E00EB3E33 /* sys03Node.cpp */; };
+		C60CA8B51E2F423C00EB3E33 /* arm04Sim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C60CA8B31E2F423C00EB3E33 /* arm04Sim.cpp */; };
+		C60CA8B81E2F489E00EB3E33 /* sys04Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C60CA8B61E2F489E00EB3E33 /* sys04Node.cpp */; };
+		C60CA8BC1E2F651E00EB3E33 /* sys06Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C60CA8BA1E2F651E00EB3E33 /* sys06Node.cpp */; };
 		D3301F6A0B43BB293ED97C1D /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8A4DD23693DFAB8EC05FAA5D /* ofxCvShortImage.cpp */; };
 		DCFE68246C543C4242A2D447 /* ofxKsmrFragFXUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 36326A8FAB7DAF92AE53EFCF /* ofxKsmrFragFXUnit.cpp */; };
 		E212C821D1064B92DD953A42 /* ofxCvHaarFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A16CBF2E8CFE43AF54FE6F5 /* ofxCvHaarFinder.cpp */; };
@@ -176,7 +179,7 @@
 		61313493CDB52744E22A604D /* json-forwards.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = "json-forwards.h"; path = "../../../addons/ofxJSON/libs/jsoncpp/include/json/json-forwards.h"; sourceTree = SOURCE_ROOT; };
 		61339778C58D921474B5729E /* features2d.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = features2d.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/features2d/features2d.hpp; sourceTree = SOURCE_ROOT; };
 		63152EF07846DECD2854B62C /* utility.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = utility.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/gpu/device/utility.hpp; sourceTree = SOURCE_ROOT; };
-		634BCB5872798210D4F280D7 /* node.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = node.cpp; path = src/node.cpp; sourceTree = SOURCE_ROOT; };
+		634BCB5872798210D4F280D7 /* node.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = node.cpp; path = src/node.cpp; sourceTree = SOURCE_ROOT; };
 		63A47AC60FFAFC3BF093EC0F /* OscOutboundPacketStream.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscOutboundPacketStream.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.cpp; sourceTree = SOURCE_ROOT; };
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
 		665780A3005496E3A4A0D9EF /* compat.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = compat.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/legacy/compat.hpp; sourceTree = SOURCE_ROOT; };
@@ -281,6 +284,12 @@
 		C60CA8A11E2F05D300EB3E33 /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		C60CA8AC1E2F2B9E00EB3E33 /* sys03Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys03Node.cpp; sourceTree = "<group>"; };
 		C60CA8AD1E2F2B9E00EB3E33 /* sys03Node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sys03Node.hpp; sourceTree = "<group>"; };
+		C60CA8B31E2F423C00EB3E33 /* arm04Sim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = arm04Sim.cpp; path = src/arm04Sim.cpp; sourceTree = SOURCE_ROOT; };
+		C60CA8B41E2F423C00EB3E33 /* arm04Sim.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = arm04Sim.hpp; path = src/arm04Sim.hpp; sourceTree = SOURCE_ROOT; };
+		C60CA8B61E2F489E00EB3E33 /* sys04Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys04Node.cpp; sourceTree = "<group>"; };
+		C60CA8B71E2F489E00EB3E33 /* sys04Node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sys04Node.hpp; sourceTree = "<group>"; };
+		C60CA8BA1E2F651E00EB3E33 /* sys06Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys06Node.cpp; sourceTree = "<group>"; };
+		C60CA8BB1E2F651E00EB3E33 /* sys06Node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sys06Node.hpp; sourceTree = "<group>"; };
 		C6151136D101F857DAE12722 /* ofxCvImage.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxCvImage.cpp; path = ../../../addons/ofxOpenCv/src/ofxCvImage.cpp; sourceTree = SOURCE_ROOT; };
 		C61D3DACE506E4A1C3A6D782 /* highgui.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = highgui.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/highgui/highgui.hpp; sourceTree = SOURCE_ROOT; };
 		C65A89034372885C3F7259F5 /* superres.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = superres.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/superres/superres.hpp; sourceTree = SOURCE_ROOT; };
@@ -876,6 +885,8 @@
 		C60CA8851E2F05D300EB3E33 /* ofxKsmrAgileEye */ = {
 			isa = PBXGroup;
 			children = (
+				C60CA8B41E2F423C00EB3E33 /* arm04Sim.hpp */,
+				C60CA8B31E2F423C00EB3E33 /* arm04Sim.cpp */,
 				C60CA8861E2F05D300EB3E33 /* ofxKsmrAgileEye.cpp */,
 				C60CA8871E2F05D300EB3E33 /* ofxKsmrAgileEye.h */,
 			);
@@ -907,6 +918,10 @@
 			children = (
 				C60CA8AD1E2F2B9E00EB3E33 /* sys03Node.hpp */,
 				C60CA8AC1E2F2B9E00EB3E33 /* sys03Node.cpp */,
+				C60CA8B71E2F489E00EB3E33 /* sys04Node.hpp */,
+				C60CA8B61E2F489E00EB3E33 /* sys04Node.cpp */,
+				C60CA8BA1E2F651E00EB3E33 /* sys06Node.cpp */,
+				C60CA8BB1E2F651E00EB3E33 /* sys06Node.hpp */,
 			);
 			name = systemNodes;
 			sourceTree = "<group>";
@@ -1234,6 +1249,7 @@
 				C60CA8AE1E2F2B9E00EB3E33 /* sys03Node.cpp in Sources */,
 				FB84AAF8D1B7A95266DB5C09 /* jsoncpp.cpp in Sources */,
 				DCFE68246C543C4242A2D447 /* ofxKsmrFragFXUnit.cpp in Sources */,
+				C60CA8BC1E2F651E00EB3E33 /* sys06Node.cpp in Sources */,
 				5538BD70A84CB59D5C31F622 /* ofxKsmrFragmentFx.cpp in Sources */,
 				250A95BA26587BE85DB0A353 /* ofxCvColorImage.cpp in Sources */,
 				1D5F3298C2FA073628012944 /* ofxCvContourFinder.cpp in Sources */,
@@ -1257,6 +1273,8 @@
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
 				EDD3448A1F73BF611F4D46A8 /* ofxTrueTypeFontUC.cpp in Sources */,
+				C60CA8B51E2F423C00EB3E33 /* arm04Sim.cpp in Sources */,
+				C60CA8B81E2F489E00EB3E33 /* sys04Node.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,12 +11,16 @@
 void nodeManager::setup()
 {
 	sys03node.setup();
+	sys04node_c.setup(true);
+	sys04node_p.setup(false);
 }
 
 void nodeManager::update()
 {
 	
 	sys03node.update();
+	sys04node_c.update();
+	sys04node_p.update();
 	
 	vector<ofPtr<node> >::iterator it = nodes.begin();
 	
@@ -39,8 +43,16 @@ void nodeManager::draw()
 	
 	if (ofGetFrameNum() % 60 == 0)
 	{
+		
 		if (nodes.size() > 3)
 			sys03node.setTarget(nodes[int(ofRandom(100)) % nodes.size()]);
+		
+		if (nodes.size() > 3)
+			sys04node_c.setTarget(nodes[int(ofRandom(100)) % nodes.size()]);
+		
+		if (nodes.size() > 3)
+			sys04node_p.setTarget(nodes[int(ofRandom(100)) % nodes.size()]);
+		
 	}
 }
 
@@ -60,8 +72,12 @@ void nodeManager::addNewNode(ofVec2f pos, int type)
 			{
 				randomConnect = nodes[int(ofRandom(10000)) % nodes.size()];
 			}
-			randomConnect->manager.connectTo(ofRandom(5),
-											 nd->manager.outlets[int(ofRandom(10)) % nd->manager.outlets.size()]);			
+			
+			if (nd->manager.outlets.size() > 0)
+			{
+				randomConnect->manager.connectTo(ofRandom(5),
+												 nd->manager.outlets[int(ofRandom(10)) % nd->manager.outlets.size()]);
+			}
 		}
 	}
 }

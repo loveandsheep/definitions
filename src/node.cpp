@@ -26,21 +26,49 @@ void node::setup(ofVec2f pos_, int tp)
 		addOutlet("arm-A");
 		addOutlet("arm-B");
 		addOutlet("arm-C");
+		agileEye.setup();
+	}
+	if (type == TYPE_ARM)
+	{
+		arm.setup();
+		arm.work.setGlobalPosition(0, -300, 0);
+		arm.update();
+		addInlet("pos-X", 0.5);
+		addInlet("pos-Y", 0.5);
+		addInlet("pos-Z", 0.5);
+	}
+	
+	if (type == TYPE_CIRCLE)
+	{
+		addInlet("speed", 0.5);
+		addOutlet("sin");
+		addOutlet("cos");
 	}
 	
 	area_scale = ofRandom(100, 200);
 	seed = ofRandomuf();
 	
-	agileEye.setup();
-	
-	bgColor.set(1.0, 1.0, 1.0, 0.1);
+	bgColor.set(1.0, 1.0, 1.0, 0.2);
 }
 
 void node::update()
 {
-	agileEye.update(ofVec3f((getInletValue("pos-X") - 0.5) * 300,
-							(getInletValue("pos-X") - 0.5) * 300,
-							300));
+	if (type == TYPE_AGILE)
+	{
+		agileEye.update(ofVec3f((getInletValue("pos-X") - 0.5) * 300,
+								(getInletValue("pos-Y") - 0.5) * 300,
+								300));
+	}
+	if (type == TYPE_ARM)
+	{
+		if (ofGetFrameNum() % 120 == 0)
+		{
+			arm.work.setGlobalPosition(ofVec3f(ofMap(getInletValue("pos-X"), 0, 1, -50, 50),
+											   ofMap(getInletValue("pos-Y"), 0, 1, -100, -200),
+											   ofMap(getInletValue("pos-Z"), 0, 1, -50, 50)));
+			arm.update();
+		}
+	}
 	
 	pos = pos_base + ofVec2f(ofSignedNoise(seed * 342.31 + ofGetFrameNum() / 234.5) * 5,
 							 ofSignedNoise(seed * 135.32 + ofGetFrameNum() / 256.1) * 5);
@@ -120,12 +148,42 @@ void node::draw()
 	
 	ofSetRectMode(OF_RECTMODE_CORNER);
 
-	ofRotateY(seed < 0.5 ? 45 : -45);
 	
 	ofPushMatrix();
 	{
 		glScaled(time_object, time_object, 1.0);
-		agileEye.draw();
+		
+		if (type == TYPE_AGILE)
+		{
+			ofRotateY(seed < 0.5 ? 45 : -45);
+			agileEye.draw();
+		}
+		if (type == TYPE_ARM)
+		{
+			ofScale(0.5, 0.5, 0.5);
+			ofRotateZ(180);
+			ofTranslate(0, 30, 0);
+			ofRotateY(45);
+			arm.draw();
+		}
+		if (type == TYPE_CIRCLE)
+		{
+			circle_phase += getInletValue("speed") / 10.0;
+			ofSetColor(255);
+			ofNoFill();
+			ofDrawCircle(0, 0, area_scale / 2.2);
+			ofFill();
+			ofPushMatrix();
+			ofTranslate(sin(circle_phase) * (area_scale / 2.8),
+						cos(circle_phase) * (area_scale / 2.8));
+			ofSetColor(0, 255, 150);
+			ofDrawCircle(0, 0, 5);
+			ofPopMatrix();
+			
+			setOutletValue("sin", ofMap(sin(circle_phase), -1.0, 1.0, 0.0, 1.0));
+			setOutletValue("cos", ofMap(cos(circle_phase), -1.0, 1.0, 0.0, 1.0));
+		}
+
 	}
 	ofPopMatrix();
 	
@@ -148,12 +206,12 @@ void node::draw_inlets()
 		float ps = (i - numIl / 2.0 + 0.5) * 10;
 		il->absPos.set(pos + ofVec2f(-ps - area_scale / 2.0 * 0.7, ps - area_scale / 2.0 * 0.7));
 		
-		ofSetColor(100);
+		ofSetColor(0, 255, 100);
 		ofPushMatrix();
 		ofTranslate(il->absPos);
 		ofSetRectMode(OF_RECTMODE_CENTER);
 		ofRotateZ(45);
-		ofDrawRectangle(0, 0, 3, 3);
+		ofDrawRectangle(0, 0, 6, 6);
 		ofSetRectMode(OF_RECTMODE_CORNER);
 		ofPopMatrix();
 	}
@@ -171,15 +229,16 @@ void node::draw_outlets()
 		float ps = (i - numOl / 2.0 + 0.5) * 10;
 		ol->absPos.set(pos + ofVec2f(-ps + area_scale / 2.0 * 0.7, ps + area_scale / 2.0 * 0.7));
 		
-		ofSetColor(150);
-		
+		ofSetColor(0, 205, 140);
 		ofPushMatrix();
 		ofTranslate(ol->absPos);
 		ofSetRectMode(OF_RECTMODE_CENTER);
 		ofRotateZ(45);
-		ofDrawRectangle(0, 0, 3, 3);
+		ofDrawRectangle(0, 0, 6, 6);
 		ofSetRectMode(OF_RECTMODE_CORNER);
 		ofPopMatrix();
+		
+		ofSetColor(70);
 		
 		if (ol->targ)
 		{
@@ -251,10 +310,11 @@ void node::setOutletValue(string name, float param)
 	}
 }
 
-void node::addInlet(string label)
+void node::addInlet(string label, float def)
 {
 	ofPtr<nodeInlet> il = ofPtr<nodeInlet>(new nodeInlet);
 	il->label = label;
+	il->param = def;
 	manager.inlets.push_back(il);
 }
 

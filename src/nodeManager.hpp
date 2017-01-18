@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "node.hpp"
 #include "sys03Node.hpp"
+#include "sys04Node.hpp"
 
 class nodeManager{
 	
@@ -25,7 +26,8 @@ public:
 	vector< ofPtr<node> > nodes;
 	
 	sys03Node sys03node;
-
+	sys04Node sys04node_c;
+	sys04Node sys04node_p;
 };
 
 #endif /* nodeManager_hpp */
