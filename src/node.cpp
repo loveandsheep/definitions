@@ -51,7 +51,7 @@ void node::setup(ofVec2f pos_, int tp)
 		addInlet("speed", 0.5);
 		addOutlet("sin");
 		addOutlet("cos");
-		area_scale = 170;
+		area_scale = 100;
 	}
 	
 	if ((type == TYPE_POP_A) ||
@@ -156,7 +156,7 @@ void node::update()
 	setOutletValue("arm-B", ofMap(agileEye.arm[1].rootPan, -30, 30, 0.0, 1.0, true));
 	setOutletValue("arm-C", ofMap(agileEye.arm[2].rootPan, -30, 30, 0.0, 1.0, true));
 	
-	if (frame == 600) isClosing = true;
+//	if (frame == 600) isClosing = true;
 	
 	if (isClosing) closeFrame++;
 	

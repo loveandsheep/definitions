@@ -11,7 +11,7 @@
 void sys04Node::setup(bool isC)
 {
 	senderSetup = true;
-	HWPos = (isC ? ofVec2f(600, 800) : ofVec2f(1200, 800));
+	HWPos = (isC ? ofVec2f(460 + 1920, 800) : ofVec2f(1660 + 1920, 800));
 	try{
 		sender.setup(isC ? def::ADDR_SYS04_C : def::ADDR_SYS04_P, 12400);
 	} catch (std::runtime_error) {
@@ -52,6 +52,21 @@ void sys04Node::update()
 		ofxOscMessage m;
 		m.setAddress("/manual");
 		m.addIntArg(1);
+		sender.sendMessage(m);
+	}
+	
+	if (bDefault)
+	{
+		if (ofGetFrameNum() % 3 == 0)
+		{
+			ofxOscMessage m;
+			m.setAddress("/pos");
+			m.addFloatArg(0.0);
+			m.addFloatArg(-200);
+			m.addFloatArg(0.0);
+			sender.sendMessage(m);
+		}
+		return;
 	}
 	
 	if (previousNode)
@@ -61,7 +76,10 @@ void sys04Node::update()
 										  ofxeasing::quint::easeInOut);
 		
 		previousNode->pos_base = HWPos.getInterpolated(previousOld, lerp);
-		if (lerp == 1) previousNode.reset();
+		if (previousFrame > 120)
+		{
+			previousNode.reset();
+		}
 	}
 	
 	

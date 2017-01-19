@@ -51,9 +51,9 @@ void nodeManager::update()
 				nodes[j]->pos_base += (nodes[j]->pos_base - nodes[i]->pos_base).getNormalized() * 10000.0 / dist;
 			}
 			nodes[i]->pos_base.x = ofClamp(nodes[i]->pos_base.x, 100, def::scr_w - 100);
-			nodes[i]->pos_base.y = ofClamp(nodes[i]->pos_base.y, 100, def::scr_h - 100);
+			nodes[i]->pos_base.y = ofClamp(nodes[i]->pos_base.y, 100, def::scr_h - 600);
 			nodes[j]->pos_base.x = ofClamp(nodes[j]->pos_base.x, 100, def::scr_w - 100);
-			nodes[j]->pos_base.y = ofClamp(nodes[j]->pos_base.y, 100, def::scr_h - 100);
+			nodes[j]->pos_base.y = ofClamp(nodes[j]->pos_base.y, 100, def::scr_h - 600);
 			
 		}
 	}
@@ -63,7 +63,7 @@ void nodeManager::draw()
 {
 	for (auto it : nodes) it->draw();
 	
-	if (ofGetFrameNum() % 200 == 0)
+	if (ofGetFrameNum() % 300 == 0)
 	{
 		
 		if (nodes.size() > 3)

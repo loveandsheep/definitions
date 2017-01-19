@@ -33,6 +33,7 @@ public:
 	int previousFrame;
 	ofVec2f HWPos = ofVec2f(600, 800);
 	int targType;
+	bool bDefault;
 };
 
 #endif /* sys06Node_hpp */

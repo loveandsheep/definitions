@@ -49,7 +49,7 @@ void sys03Node::update()
 		{
 			ofxOscMessage m;
 			m.setAddress("/system03/manual");
-			m.addIntArg(1);
+			m.addIntArg(0);
 			
 			ofxOscMessage m2;
 			m2.setAddress("/system03/default");
@@ -63,14 +63,20 @@ void sys03Node::update()
 			sender.sendMessage(m2);
 			sender.sendMessage(m3);
 		}
+		return;
 	}else{
 		if (ofGetFrameNum() % 5 == 0)
 		{
+			ofxOscMessage m2;
+			m2.setAddress("/system03/manual");
+			m2.addIntArg(1);
+			
 			ofxOscMessage m;
 			m.setAddress("/system03/default");
 			m.addIntArg(0);
 			
 			sender.sendMessage(m);
+			sender.sendMessage(m2);
 		}
 	}
 

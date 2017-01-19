@@ -33,4 +33,6 @@ public:
 	bool isDebug;
 	ofParameter<bool> singleView;
 	bool bDefault;
+	
+	ofTrueTypeFont font;
 };

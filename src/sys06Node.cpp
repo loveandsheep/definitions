@@ -11,7 +11,7 @@
 void sys06Node::setup(bool isC)
 {
 	senderSetup = true;
-	HWPos = (isC ? ofVec2f(600, 800) : ofVec2f(1200, 800));
+	HWPos = (isC ? ofVec2f(1060 + 1920 * 2, 800) : ofVec2f(1660 + 1920 * 2, 800));
 	targType = isC ? node::TYPE_POP_A : node::TYPE_POP_B;
 	
 	try{
@@ -49,6 +49,27 @@ bool sys06Node::setTarget(ofPtr<node> targ)
 
 void sys06Node::update()
 {
+	
+	if (bDefault)
+	{
+		if (ofGetFrameNum() % 15 == 0)
+		{
+			ofxOscMessage m;
+			m.setAddress("/mode");
+			m.addIntArg(0);
+			sender.sendMessage(m);
+		}
+		return;
+
+	}else{
+		if (ofGetFrameNum() % 15 == 0)
+		{
+			ofxOscMessage m;
+			m.setAddress("/mode");
+			m.addIntArg(2);
+			sender.sendMessage(m);
+		}
+	}
 	
 	if (previousNode)
 	{
@@ -97,8 +118,8 @@ void sys06Node::update()
 				{
 					ofxOscMessage m;
 					m.setAddress("/bang");
-					m.addIntArg(targNode->bangTarg);
 					m.addIntArg(0);
+					m.addIntArg(targNode->bangTarg);
 					sender.sendMessage(m);
 				}
 				targNode->bangTarg = -1;

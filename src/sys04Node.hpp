@@ -32,6 +32,7 @@ public:
 	int previousFrame;
 	ofVec2f HWPos = ofVec2f(600, 800);
 	
+	bool bDefault;
 };
 
 #endif /* sys04Node_hpp */

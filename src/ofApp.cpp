@@ -15,6 +15,8 @@ void ofApp::setup()
 	ofSetCircleResolution(32);
 	
 	bDefault = true;
+	
+	font.load("Dosis-ExtraLight.otf", 72);
 }
 
 void ofApp::update()
@@ -33,10 +35,10 @@ void ofApp::update()
 	static int step = ofRandom(10, 30);
 	if (ofGetFrameNum() % step == 0)
 	{
-		step = ofRandom(100, 500);
-		nodeMn.addNewNode(ofVec2f(ofRandomuf() * def::scr_w/3,
-								  ofRandomuf() * def::scr_h),
-						  (int(ofRandom(100)) % 5) + 1);
+//		step = ofRandom(100, 500);
+//		nodeMn.addNewNode(ofVec2f(ofRandomuf() * def::scr_w,
+//								  ofRandomuf() * def::scr_h),
+//						  (int(ofRandom(100)) % 5) + 1);
 	}
 }
 
@@ -65,6 +67,15 @@ void ofApp::draw()
 		}
 	}
 
+	
+	if (bDefault)
+	{
+		ofSetColor(255);
+		ofRectangle fr = font.getStringBoundingBox("--- Default ---", 0, 0);
+		fr.setFromCenter(def::scr_w/2, def::scr_h/2, fr.width, fr.height);
+		font.drawString("--- Default ---", fr.x, fr.y);
+	}
+	
 	ofPopMatrix();
 	cam.end();
 	disp.end();
@@ -73,10 +84,17 @@ void ofApp::draw()
 	
 	if (isDebug) gui.draw();
 	
+	nodeMn.sys03node.bDefault =
+	nodeMn.sys04node_c.bDefault =
+	nodeMn.sys04node_p.bDefault =
+	nodeMn.sys06node_a.bDefault =
+	nodeMn.sys06node_b.bDefault = bDefault;
+
 }
 
 void ofApp::keyPressed(int key)
 {
+	if (key == ' ') bDefault ^= true;
 	if (key == 'd') isDebug ^= true;
 	if (key == 'f') ofToggleFullscreen();
 	if (key == 's')
