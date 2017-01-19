@@ -49,7 +49,7 @@ bool sys04Node::setTarget(ofPtr<node> targ)
 
 void sys04Node::update()
 {
-	if (ofGetFrameNum() % 10 == 0)
+	if ((ofGetFrameNum() % 10 == 0) && senderSetup)
 	{
 		ofxOscMessage m;
 		m.setAddress("/manual");
@@ -57,7 +57,7 @@ void sys04Node::update()
 		sender.sendMessage(m);
 	}
 	
-	if (bDefault)
+	if (bDefault && senderSetup)
 	{
 		if (ofGetFrameNum() % 10 == 0)
 		{

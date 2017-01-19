@@ -94,7 +94,8 @@ public:
 	static const int TYPE_POP_A = 2;
 	static const int TYPE_POP_B = 3;
 	static const int TYPE_CIRCLE = 4;
-	static const int current_type_count = 5;
+	static const int TYPE_BLINKER = 5;
+	static const int current_type_count = 6;
 	
 	int type = TYPE_AGILE;
 	
@@ -111,6 +112,9 @@ public:
 	bool hwConnected = false;
 	
 	float circle_phase = 0;
+	
+	float blinker_value;
+	int blinkerFrame;
 };
 
 #endif /* node_hpp */

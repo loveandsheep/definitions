@@ -61,7 +61,7 @@ void nodeManager::update()
 	if ((ofGetFrameNum() % step == 0) &&
 		(nodes.size() < max_node_num))
 	{//最も少ないタイプを増やす
-		step = ofRandom(60, 350);
+		step = ofRandom(30, 150);
 		
 		int typeCount[node::current_type_count];
 		
@@ -82,46 +82,69 @@ void nodeManager::update()
 				minType = i;
 		}
 		
-		addNewNode(ofVec2f(ofRandom(def::scr_w),
-						   ofRandom(def::scr_h - 600)), minType);
+		if (ofRandomuf() < 0.40)
+		{
+			addNewNode(ofVec2f(ofRandom(def::scr_w),
+							   ofRandom(def::scr_h - 600)),
+					   ofRandomuf() < 0.5 ? node::TYPE_BLINKER : node::TYPE_CIRCLE);
+		}else{
+			addNewNode(ofVec2f(ofRandom(def::scr_w),
+							   ofRandom(def::scr_h - 600)), int(ofRandom(100)) % node::current_type_count);
+		}
 	}
 	
 	//定期的に接続を行う
 	static int step_connection = ofRandom(10, 30);
 	if ((ofGetFrameNum() % step_connection == 0))
 	{
-		step_connection = ofRandom(10, 60);
+		step_connection = ofRandom(30, 300);
 		
 		ofPtr<node> outNode, inNode;
 		ofPtr<nodeInlet> il;
 		ofPtr<nodeOutlet> ol;
-		for (int i = 0;i < 100;i++)
+		bool bBreak = false;
+		for (int i = 0;i < 300;i++)
 		{
-			ofPtr<node> tg = nodes[int(ofRandom(100)) % nodes.size()];
+			ofPtr<node> tg = nodes[i % nodes.size()];
 			
 			if (tg->manager.inlets.size() > 0)
 			{
-				for (int j = 0;j < 100;j++)
+				for (int j = 0;j < 300;j++)
 				{
-					il = tg->manager.inlets[int(ofRandom(100)) % tg->manager.inlets.size()];
+					il = tg->manager.inlets[j % tg->manager.inlets.size()];
 					inNode = tg;
-					if (!il->targ) break;
+					if (!il->targ)
+					{
+						bBreak = true;
+						break;
+					}
 				}
 			}
+			
+			if (bBreak)
+			{
+				bBreak = false;
+				break;
+			}
 		}
-		for (int i = 0;i < 100;i++)
+		for (int i = 0;i < 300;i++)
 		{
-			ofPtr<node> tg = nodes[int(ofRandom(100)) % nodes.size()];
+			ofPtr<node> tg = nodes[i % nodes.size()];
 			
 			if (tg->manager.outlets.size() > 0)
 			{
-				for (int j = 0;j < 100;j++)
+				for (int j = 0;j < 300;j++)
 				{
-					ol = tg->manager.outlets[int(ofRandom(100)) % tg->manager.outlets.size()];
+					ol = tg->manager.outlets[j % tg->manager.outlets.size()];
 					outNode = tg;
-					if ((tg != inNode) && (!ol->targ)) break;
+					if ((outNode != inNode) && (!ol->targ))
+					{
+						bBreak = true;
+						break;
+					}
 				}
 			}
+			if (bBreak) break;
 		}
 		
 		if ((!ol->targ) && (!il->targ) && (inNode != outNode))
@@ -129,6 +152,12 @@ void nodeManager::update()
 			il->targ = ol;
 			ol->targ = il;
 			ol->connectFrame = 0;
+			cout << "Connect success :" << ofGetFrameNum() << endl;
+		}else{
+			cout << "Connect Failed :" << ofGetFrameNum() << endl;
+			if (inNode == outNode) cout << "same Node" << endl;
+			if (ol->targ) cout << "ol has targ" << endl;
+			if (il->targ) cout << "il has targ" << endl;
 		}
 		
 //		ofPtr<node> randomConnect = nodes[int(ofRandom(10000)) % nodes.size()];

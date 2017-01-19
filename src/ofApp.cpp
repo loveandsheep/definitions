@@ -17,6 +17,7 @@ void ofApp::setup()
 	bDefault = true;
 	
 	font.load("Dosis-ExtraLight.otf", 72);
+	
 }
 
 void ofApp::update()
@@ -112,6 +113,8 @@ void ofApp::keyPressed(int key)
 	if (key == '5')
 		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_CIRCLE);
 
+	if (key == '6')
+		nodeMn.addNewNode(ofVec2f(ofGetMouseX(), ofGetMouseY()), node::TYPE_BLINKER);
 }
 
 

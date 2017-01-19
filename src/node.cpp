@@ -56,6 +56,12 @@ void node::setup(ofVec2f pos_, int tp)
 		addOutlet("cos");
 		area_scale = 100;
 	}
+	if (type == TYPE_BLINKER)
+	{
+		addInlet("tempo", 0.5);
+		addOutlet("value");
+		area_scale = 90;
+	}
 	
 	if ((type == TYPE_POP_A) ||
 		(type == TYPE_POP_B))
@@ -74,6 +80,11 @@ void node::update()
 		agileEye.update(ofVec3f((getInletValue("pos-X") - 0.5) * 300,
 								(getInletValue("pos-Y") - 0.5) * 300,
 								300));
+		
+		setOutletValue("arm-A", ofMap(agileEye.arm[0].rootPan, -30, 30, 0.0, 1.0, true));
+		setOutletValue("arm-B", ofMap(agileEye.arm[1].rootPan, -30, 30, 0.0, 1.0, true));
+		setOutletValue("arm-C", ofMap(agileEye.arm[2].rootPan, -30, 30, 0.0, 1.0, true));
+
 	}
 	if (type == TYPE_ARM)
 	{
@@ -84,6 +95,10 @@ void node::update()
 							  ofMap(getInletValue("pos-Z"), 0, 1, -50, 50));
 			
 		}
+	
+		arm_ease.interpolate(armTarg, 0.03);
+		arm.work.setGlobalPosition(arm_ease);
+		arm.update();
 		
 		setOutletValue("arm-A", ofMap(arm.motor[0].getRoll(),
 									  40, 80, 0.0, 1.0, true));
@@ -91,10 +106,15 @@ void node::update()
 									  40, 80, 0.0, 1.0, true));
 		setOutletValue("arm-C", ofMap(arm.motor[2].getRoll(),
 									  40, 80, 0.0, 1.0, true));
+	}
+	
+	if (type == TYPE_BLINKER)
+	{
+		int inlet = 20 + getInletValue("tempo") * 120;
+		blinkerFrame = int(blinkerFrame + getInletValue("tempo") * 30 + 10) % 600;
 		
-		arm_ease.interpolate(armTarg, 0.03);
-		arm.work.setGlobalPosition(arm_ease);
-		arm.update();
+		blinker_value += ((blinkerFrame < 300) - blinker_value) / 4.0;
+		setOutletValue("value", blinker_value);
 	}
 	
 	if (type == TYPE_POP_A)
@@ -163,10 +183,6 @@ void node::update()
 	
 	frame++;
 	
-	setOutletValue("arm-A", ofMap(agileEye.arm[0].rootPan, -30, 30, 0.0, 1.0, true));
-	setOutletValue("arm-B", ofMap(agileEye.arm[1].rootPan, -30, 30, 0.0, 1.0, true));
-	setOutletValue("arm-C", ofMap(agileEye.arm[2].rootPan, -30, 30, 0.0, 1.0, true));
-	
 //	if (frame == 600) isClosing = true;
 	
 	if (isClosing) closeFrame++;
@@ -174,6 +190,7 @@ void node::update()
 	if (closeFrame == 30)
 	{
 		manager.disconnectInlets();
+		manager.disconnectOutlets();
 		needErase = true;
 	}
 }
@@ -297,6 +314,7 @@ void node::draw()
 			ofRotateZ(180);
 			ofTranslate(0, 30, 0);
 			ofRotateY(45);
+			ofSetColor(255);
 			arm.draw();
 		}
 		if (type == TYPE_CIRCLE)
@@ -315,6 +333,17 @@ void node::draw()
 			
 			setOutletValue("sin", ofMap(sin(circle_phase), -1.0, 1.0, 0.0, 1.0));
 			setOutletValue("cos", ofMap(cos(circle_phase), -1.0, 1.0, 0.0, 1.0));
+		}
+		if (type == TYPE_BLINKER)
+		{
+			ofSetColor(0, 255, 150);
+			ofSetRectMode(OF_RECTMODE_CENTER);
+			ofRotateZ(45);
+			ofNoFill();
+			ofDrawRectangle(0, 0, 50, 50);
+			ofFill();
+			ofDrawRectangle(0, 0, 50 * blinker_value, 50 * blinker_value);
+			ofSetRectMode(OF_RECTMODE_CORNER);
 		}
 
 	}
@@ -377,9 +406,15 @@ void node::draw_outlets()
 		float scale = 6 + ol->param * 5.0;
 		ofDrawRectangle(0, 0, scale, scale);
 		ofSetRectMode(OF_RECTMODE_CORNER);
+		
+		ofSetColor(255);
+		if (ofGetKeyPressed('o'))
+			ofDrawBitmapString(ofToString(ol->param), 20, 0);
+
 		ofPopMatrix();
 		
 		ofSetColor(70);
+		
 		
 		if (ol->targ)
 		{
@@ -451,7 +486,7 @@ void node::setOutletValue(string name, float param)
 	if (tg)
 	{
 		tg->param = param;
-		if (tg->targ) tg->targ->param = param;
+		if (tg->targ && (tg->connectFrame > 100)) tg->targ->param = param;
 	}
 }
 
@@ -484,10 +519,15 @@ void nodeIOManager::disconnectInlets(int index)
 void nodeIOManager::disconnectOutlets(int index)
 {
 	if (index == -1)
-		for (auto it : outlets) it->targ.reset();
+		for (auto it : outlets)
+		{
+			if (it->targ) it->targ->targ.reset();
+			it->targ.reset();
+		}
 	else
 	{
 		index = index % outlets.size();
+		if (outlets[index]->targ) outlets[index]->targ->targ.reset();
 		outlets[index]->targ.reset();
 	}
 

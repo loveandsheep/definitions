@@ -45,7 +45,7 @@ bool sys03Node::setTarget(ofPtr<node> targ)
 
 void sys03Node::update()
 {
-	if (bDefault)
+	if (bDefault && senderSetup)
 	{
 		if (ofGetFrameNum() % 5 == 0)
 		{
@@ -66,7 +66,7 @@ void sys03Node::update()
 			sender.sendMessage(m3);
 		}
 		return;
-	}else{
+	}else if (senderSetup){
 		if (ofGetFrameNum() % 5 == 0)
 		{
 			ofxOscMessage m2;
