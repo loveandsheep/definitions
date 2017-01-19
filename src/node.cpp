@@ -18,7 +18,7 @@ void node::setup(ofVec2f pos_, int tp)
 	closeFrame	= 0;
 	area_scale = ofRandom(100, 200);
 	seed = ofRandomuf();
-	bgColor.set(1.0, 1.0, 1.0, 0.2);
+	bgColor.set(1.0, 1.0, 1.0, 0.1);
 	
 	if (type == TYPE_AGILE)
 	{
@@ -183,7 +183,9 @@ void node::draw()
 	ofRotateZ(45 * (seed < 0.5 ? -1.0 : 1.0));
 	
 	ofSetColor(bgColor);
+	ofNoFill();
 	ofDrawRectangle(0, 0, time_opening * area_scale, time_opening_b * area_scale);
+	ofFill();
 	
 	ofNoFill();
 	ofVec2f pts[8];
@@ -370,6 +372,7 @@ void node::draw_outlets()
 		
 		if (ol->targ)
 		{
+			ol->connectFrame++;
 			ofVec2f pi = ol->targ->absPos;
 			ofVec2f po = ol->absPos;
 			ofVec2f pc = ofVec2f(po.x, pi.y);
@@ -397,11 +400,14 @@ void node::draw_outlets()
 			glLineWidth(2);
 			glEnableClientState(GL_VERTEX_ARRAY);
 			glVertexPointer(2, GL_FLOAT, 0, &vertVec[0]);
-			float pct = ofxeasing::map_clamp(frame, 10, 90 + ofNoise(i * 34.13) * 15, 0.0, 1.0, ofxeasing::quint::easeInOut) - ofxeasing::map_clamp(closeFrame, 0, 30, 0.0, 1.0, ofxeasing::quint::easeInOut);
+			float pct = ofxeasing::map_clamp(ol->connectFrame, 10, 90 + ofNoise(i * 34.13) * 15, 0.0, 1.0, ofxeasing::quint::easeInOut) - ofxeasing::map_clamp(closeFrame, 0, 30, 0.0, 1.0, ofxeasing::quint::easeInOut);
 			glDrawArrays(GL_LINES, 0, vertVec.size() * pct);
 			glDisableClientState(GL_VERTEX_ARRAY);
 			glLineWidth(1);
-			
+
+			ofSetColor(0, 128, 80);
+			if (pct < 1.0)
+				ofDrawCircle(vertVec[vertVec.size() * pct], 5);
 		}
 	}
 	

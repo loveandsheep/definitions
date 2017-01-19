@@ -32,7 +32,7 @@ public:
 	ofVec2f previousOld;
 	int targFrame;
 	int previousFrame;
-	const ofVec2f sys03HWPos = ofVec2f(700, 800);
+	const ofVec2f sys03HWPos = ofVec2f(700, 930);
 	
 	bool bDefault;
 };

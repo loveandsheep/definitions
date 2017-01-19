@@ -11,7 +11,7 @@
 void sys04Node::setup(bool isC)
 {
 	senderSetup = true;
-	HWPos = (isC ? ofVec2f(460 + 1920, 800) : ofVec2f(1660 + 1920, 800));
+	HWPos = (isC ? ofVec2f(460 + 1920, 930) : ofVec2f(1660 + 1920, 930));
 	try{
 		sender.setup(isC ? def::ADDR_SYS04_C : def::ADDR_SYS04_P, 12400);
 	} catch (std::runtime_error) {
@@ -27,7 +27,8 @@ bool sys04Node::setTarget(ofPtr<node> targ)
 	{
 		if (targNode)
 		{
-			targNode->bgColor.set(1.0,1.0,1.0, 0.2);
+			targNode->bgColor.set(1.0,1.0,1.0, 0.1);
+			targNode->hwConnected = false;
 			previousNode = targNode;
 			previousOld = oldPos;
 			previousFrame = 0;
@@ -35,6 +36,7 @@ bool sys04Node::setTarget(ofPtr<node> targ)
 		
 		if (targNode) targNode->bgColor.set(1.0, 1.0, 1.0, 0.2);
 		targNode = targ;
+		targNode->hwConnected = true;
 		targNode->bgColor.set(1.0, 0.3, 0.3, 0.2);
 		oldPos = targNode->pos_base;
 		targFrame = 0;
@@ -47,7 +49,7 @@ bool sys04Node::setTarget(ofPtr<node> targ)
 
 void sys04Node::update()
 {
-	if (ofGetFrameNum() % 3 == 0)
+	if (ofGetFrameNum() % 10 == 0)
 	{
 		ofxOscMessage m;
 		m.setAddress("/manual");
@@ -57,7 +59,7 @@ void sys04Node::update()
 	
 	if (bDefault)
 	{
-		if (ofGetFrameNum() % 3 == 0)
+		if (ofGetFrameNum() % 10 == 0)
 		{
 			ofxOscMessage m;
 			m.setAddress("/pos");
@@ -97,7 +99,7 @@ void sys04Node::update()
 		targNode->pos_base = oldPos.getInterpolated(HWPos, lerp);
 
 		
-		if (ofGetFrameNum() % 120 == 0)
+		if ((targFrame > 120) && (ofGetFrameNum() % 120 == 0))
 		{
 			float px, py, pz;
 			px = ofMap(targNode->getInletValue("pos-X"), 0, 1, -50, 50, true);

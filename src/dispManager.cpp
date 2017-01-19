@@ -38,10 +38,10 @@ void dispManager::end()
 {
 	buffer.end();
 	
-	fx.getfxUnit(KSMR_FRAGFX_NOISE)->u_Volume = 0.00;
+	fx.getfxUnit(KSMR_FRAGFX_NOISE)->u_Volume = 0.03;
 	fx.getfxUnit(KSMR_FRAGFX_NOISE)->bEnable = true;
 	fx.getfxUnit(KSMR_FRAGFX_FRINGE)->u_Volume = 0.002;
-	fx.getfxUnit(KSMR_FRAGFX_FRINGE)->bEnable = false;
+	fx.getfxUnit(KSMR_FRAGFX_FRINGE)->bEnable = true;
 //	fx.getfxUnit(KSMR_FRAGFX_TEXCHIP)->bEnable = ofRandomuf() < 0.03;
 //	fx.getfxUnit(KSMR_FRAGFX_VERTSLIDE)->bEnable = ofRandomuf() < 0.002;
 //	fx.getfxUnit(KSMR_FRAGFX_VERTNOISE)->bEnable = ofRandomuf() < 0.002;

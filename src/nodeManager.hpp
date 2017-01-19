@@ -31,6 +31,9 @@ public:
 	sys04Node sys04node_p;
 	sys06Node sys06node_a;
 	sys06Node sys06node_b;
+	
+
+	static const int max_node_num = 30;
 };
 
 #endif /* nodeManager_hpp */

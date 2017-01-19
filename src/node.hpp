@@ -34,6 +34,7 @@ public:
 	string label;
 	float param = 0;
 	bool connected;
+	int connectFrame;
 	
 	ofPtr<nodeInlet> targ;
 };
@@ -88,11 +89,13 @@ public:
 	
 	nodeIOManager manager;
 	
-	static const int TYPE_AGILE = 1;
-	static const int TYPE_ARM = 2;
-	static const int TYPE_POP_A = 3;
-	static const int TYPE_POP_B = 4;
-	static const int TYPE_CIRCLE = 5;
+	static const int TYPE_AGILE = 0;
+	static const int TYPE_ARM = 1;
+	static const int TYPE_POP_A = 2;
+	static const int TYPE_POP_B = 3;
+	static const int TYPE_CIRCLE = 4;
+	static const int current_type_count = 5;
+	
 	int type = TYPE_AGILE;
 	
 	ofxKsmrAgileEye agileEye;
@@ -105,6 +108,7 @@ public:
 	int bangFrame[10];
 	int bangTarg = -1;
 	float bangDelay = 0.0;
+	bool hwConnected = false;
 	
 	float circle_phase = 0;
 };

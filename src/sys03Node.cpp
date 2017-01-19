@@ -26,12 +26,14 @@ bool sys03Node::setTarget(ofPtr<node> targ)
 	{
 		if (targNode)
 		{
-			targNode->bgColor.set(1.0,1.0,1.0, 0.2);
+			targNode->bgColor.set(1.0,1.0,1.0, 0.1);
+			targNode->hwConnected = false;
 			previousNode = targNode;
 			previousOld = oldPos;
 			previousFrame = 0;
 		}
 		targNode = targ;
+		targNode->hwConnected = true;
 		targNode->bgColor.set(1.0, 0.3, 0.3, 0.2);
 		oldPos = targNode->pos_base;
 		targFrame = 0;
@@ -97,7 +99,7 @@ void sys03Node::update()
 										  ofxeasing::quint::easeInOut);
 		targNode->pos_base = oldPos.getInterpolated(sys03HWPos, lerp);
 		
-		if (ofGetFrameNum() % 10 == 0)
+		if ((targFrame > 120) && (ofGetFrameNum() % 10 == 0))
 		{
 			float px, py;
 			px = ofMap(targNode->getInletValue("pos-X"), 0, 1, -100, 100, true);

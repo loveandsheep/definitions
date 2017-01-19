@@ -53,7 +53,7 @@ public:
 	armUnit(){
 
 		float max_outline = 80.0;
-		float arm_width = 10.0;
+		float arm_width = 7.5;
 		float arm_spacing = 3.2;
 
 		arm[0] = new singleArm(max_outline - arm_width/2,

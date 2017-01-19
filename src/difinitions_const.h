@@ -21,6 +21,8 @@ namespace def{
 	const string ADDR_SYS04_P = "192.168.11.5";
 	const string ADDR_SYS06_A = "192.168.11.14";
 	const string ADDR_SYS06_B = "192.168.11.11";
+	
+	const ofFloatColor gray = ofFloatColor(1.0,1.0,1.0,0.1);
 }
 
 #endif /* difinitions_const_h */

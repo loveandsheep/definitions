@@ -32,14 +32,6 @@ void ofApp::update()
 		}
 	}
 	
-	static int step = ofRandom(10, 30);
-	if (ofGetFrameNum() % step == 0)
-	{
-//		step = ofRandom(100, 500);
-//		nodeMn.addNewNode(ofVec2f(ofRandomuf() * def::scr_w,
-//								  ofRandomuf() * def::scr_h),
-//						  (int(ofRandom(100)) % 5) + 1);
-	}
 }
 
 void ofApp::draw()
@@ -62,8 +54,8 @@ void ofApp::draw()
 		{
 			ofSetColor(255);
 			int sc = 3;
-			ofDrawLine(x-sc, y-sc, x+sc, y+sc);
-			ofDrawLine(x+sc, y-sc, x-sc, y+sc);
+//			ofDrawLine(x-sc, y-sc, x+sc, y+sc);
+//			ofDrawLine(x+sc, y-sc, x-sc, y+sc);
 		}
 	}
 

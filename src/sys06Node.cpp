@@ -11,7 +11,7 @@
 void sys06Node::setup(bool isC)
 {
 	senderSetup = true;
-	HWPos = (isC ? ofVec2f(1060 + 1920 * 2, 800) : ofVec2f(1660 + 1920 * 2, 800));
+	HWPos = (isC ? ofVec2f(1060 + 1920 * 2, 930) : ofVec2f(1660 + 1920 * 2, 930));
 	targType = isC ? node::TYPE_POP_A : node::TYPE_POP_B;
 	
 	try{
@@ -29,7 +29,8 @@ bool sys06Node::setTarget(ofPtr<node> targ)
 	{
 		if (targNode)
 		{
-			targNode->bgColor.set(1.0,1.0,1.0, 0.2);
+			targNode->bgColor.set(1.0,1.0,1.0, 0.1);
+			targNode->hwConnected = false;
 			previousNode = targNode;
 			previousOld = oldPos;
 			previousFrame = 0;
@@ -37,6 +38,7 @@ bool sys06Node::setTarget(ofPtr<node> targ)
 		
 		if (targNode) targNode->bgColor.set(1.0, 1.0, 1.0, 0.2);
 		targNode = targ;
+		targNode->hwConnected = true;
 		targNode->bgColor.set(1.0, 0.3, 0.3, 0.2);
 		oldPos = targNode->pos_base;
 		targFrame = 0;
@@ -95,36 +97,38 @@ void sys06Node::update()
 			return;
 		}
 		
-		if (targNode->type == node::TYPE_POP_A)
+		if (targFrame > 120)
 		{
-			if (targNode->bangTarg >= 0)
+			if (targNode->type == node::TYPE_POP_A)
 			{
-				if (senderSetup)
+				if (targNode->bangTarg >= 0)
 				{
-					ofxOscMessage m;
-					m.setAddress("/bang");
-					m.addIntArg(targNode->bangTarg / 3);
-					m.addIntArg(targNode->bangTarg % 3);
-					sender.sendMessage(m);
+					if (senderSetup)
+					{
+						ofxOscMessage m;
+						m.setAddress("/bang");
+						m.addIntArg(targNode->bangTarg / 3);
+						m.addIntArg(targNode->bangTarg % 3);
+						sender.sendMessage(m);
+					}
+					targNode->bangTarg = -1;
 				}
-				targNode->bangTarg = -1;
+			}
+			if (targNode->type == node::TYPE_POP_B)
+			{
+				if (targNode->bangTarg >= 0)
+				{
+					if (senderSetup)
+					{
+						ofxOscMessage m;
+						m.setAddress("/bang");
+						m.addIntArg(0);
+						m.addIntArg(targNode->bangTarg);
+						sender.sendMessage(m);
+					}
+					targNode->bangTarg = -1;
+				}
 			}
 		}
-		if (targNode->type == node::TYPE_POP_B)
-		{
-			if (targNode->bangTarg >= 0)
-			{
-				if (senderSetup)
-				{
-					ofxOscMessage m;
-					m.setAddress("/bang");
-					m.addIntArg(0);
-					m.addIntArg(targNode->bangTarg);
-					sender.sendMessage(m);
-				}
-				targNode->bangTarg = -1;
-			}
-		}
-		
 	}
 }
