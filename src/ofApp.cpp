@@ -36,6 +36,7 @@ void ofApp::update()
 
 void ofApp::draw()
 {
+	ofHideCursor();
 	ofClear(0);
 	
 	disp.begin();
@@ -82,6 +83,9 @@ void ofApp::draw()
 	nodeMn.sys06node_a.bDefault =
 	nodeMn.sys06node_b.bDefault = bDefault;
 
+	ofSetColor(255, 0, 0);
+	if (ofGetKeyPressed('w')) ofDrawCircle(mouseX, mouseY, 5);
+	ofSetColor(255);
 }
 
 void ofApp::keyPressed(int key)

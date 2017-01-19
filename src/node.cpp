@@ -37,6 +37,9 @@ void node::setup(ofVec2f pos_, int tp)
 		addInlet("pos-X", 0.5);
 		addInlet("pos-Y", 0.5);
 		addInlet("pos-Z", 0.5);
+		addOutlet("arm-A");
+		addOutlet("arm-B");
+		addOutlet("arm-C");
 		
 		armTarg = ofVec3f(ofMap(getInletValue("pos-X"), 0, 1, -50, 50),
 						  ofMap(getInletValue("pos-Y"), 0, 1, -100, -200),
@@ -81,6 +84,14 @@ void node::update()
 							  ofMap(getInletValue("pos-Z"), 0, 1, -50, 50));
 			
 		}
+		
+		setOutletValue("arm-A", ofMap(arm.motor[0].getRoll(),
+									  40, 80, 0.0, 1.0, true));
+		setOutletValue("arm-B", ofMap(arm.motor[1].getRoll(),
+									  40, 80, 0.0, 1.0, true));
+		setOutletValue("arm-C", ofMap(arm.motor[2].getRoll(),
+									  40, 80, 0.0, 1.0, true));
+		
 		arm_ease.interpolate(armTarg, 0.03);
 		arm.work.setGlobalPosition(arm_ease);
 		arm.update();
