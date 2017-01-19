@@ -33,6 +33,8 @@ public:
 	int targFrame;
 	int previousFrame;
 	const ofVec2f sys03HWPos = ofVec2f(900, 800);
+	
+	bool bDefault;
 };
 
 #endif /* sys03Node_hpp */

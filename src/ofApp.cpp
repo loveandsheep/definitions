@@ -13,6 +13,8 @@ void ofApp::setup()
 	cam.setVFlip(true);
 	cam.enableOrtho();
 	ofSetCircleResolution(32);
+	
+	bDefault = true;
 }
 
 void ofApp::update()

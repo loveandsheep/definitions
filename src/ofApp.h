@@ -32,4 +32,5 @@ public:
 	ofxPanel gui;
 	bool isDebug;
 	ofParameter<bool> singleView;
+	bool bDefault;
 };

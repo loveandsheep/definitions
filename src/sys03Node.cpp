@@ -43,6 +43,36 @@ bool sys03Node::setTarget(ofPtr<node> targ)
 
 void sys03Node::update()
 {
+	if (bDefault)
+	{
+		if (ofGetFrameNum() % 5 == 0)
+		{
+			ofxOscMessage m;
+			m.setAddress("/system03/manual");
+			m.addIntArg(1);
+			
+			ofxOscMessage m2;
+			m2.setAddress("/system03/default");
+			m2.addIntArg(1);
+			
+			ofxOscMessage m3;
+			m3.setAddress("/system03/gpio");
+			m3.addIntArg(ofGetFrameNum() % 10 == 0);
+			
+			sender.sendMessage(m);
+			sender.sendMessage(m2);
+			sender.sendMessage(m3);
+		}
+	}else{
+		if (ofGetFrameNum() % 5 == 0)
+		{
+			ofxOscMessage m;
+			m.setAddress("/system03/default");
+			m.addIntArg(0);
+			
+			sender.sendMessage(m);
+		}
+	}
 
 	if (previousNode)
 	{
